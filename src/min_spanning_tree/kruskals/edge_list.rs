@@ -1,6 +1,6 @@
 //! Playing around with writing Kruskal's algorithm for building a minimum
 //! spanning tree.
-//! This implementation is using an adjacency list with vertex ids.
+//! This implementation is using an edge list with vertex ids.
 //! This avoids the complexities that are inherent in rust with a graph of
 //! linked nodes, such as `Rc<RefCell<Vertex>>`.
 

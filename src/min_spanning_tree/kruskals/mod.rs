@@ -1,2 +1,2 @@
-pub mod edge_list;
+pub mod edge_list_recursive;
 pub mod linked_nodes;

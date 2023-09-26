@@ -13,20 +13,11 @@ pub struct Graph {
 }
 
 
-fn find_set_short(vertex: usize, parents: &mut Vec<usize>) -> usize {
+fn find_set(vertex: usize, parents: &mut Vec<usize>) -> usize {
     if vertex != parents[vertex] {
         parents[vertex] = find_set(parents[vertex], parents);
     }
     return parents[vertex]
-}
-
-
-fn find_set(vertex: usize, parents: &mut Vec<usize>) -> usize {
-    if vertex != parents[vertex] {
-        parents[vertex] = find_set(parents[vertex], parents);
-        return parents[vertex]
-    }
-    return vertex
 }
 
 

@@ -90,4 +90,58 @@ mod tests {
         ];
         assert_eq!(mst, expected_mst);
     }
+
+    #[test]
+    fn kruskals_disconnected() {
+        let vertices: Vec<usize> = (0..14).collect();
+        let edges = vec![
+            // component 1
+            (0, 1, 7.),
+            (0, 3, 5.),
+            (1, 2, 8.),
+            (1, 3, 9.),
+            (1, 4, 7.),
+            (2, 4, 5.),
+            (3, 4, 15.),
+            (3, 5, 6.),
+            (4, 5, 8.),
+            (4, 6, 9.),
+            (5, 6, 11.),
+            // component 2
+            (7, 8, 7.),
+            (7, 10, 5.),
+            (8, 9, 8.),
+            (8, 10, 9.),
+            (8, 11, 7.),
+            (9, 11, 5.),
+            (10, 11, 15.),
+            (10, 12, 6.),
+            (11, 12, 8.),
+            (11, 13, 9.),
+            (12, 13, 11.),
+        ];
+        let graph = super::Graph {
+            edges,
+            vertices
+        };
+        let mut mst = super::build_mst(graph);
+        mst.sort_by_key(|e| (e.0, e.1));
+        let expected_mst = [
+            // mst 1
+            (0, 1),
+            (0, 3),
+            (1, 4),
+            (2, 4),
+            (3, 5),
+            (4, 6),
+            // mst 2
+            (7, 8),
+            (7, 10),
+            (8, 11),
+            (9, 11),
+            (10, 12),
+            (11, 13),
+        ];
+        assert_eq!(mst, expected_mst);
+    }
 }

@@ -44,6 +44,27 @@ fn union_components(
 }
 
 
+/// This implementation expects and edge list, along with a vector of vertices, rather
+/// than an adjaceny matrix, and the the time complexity could be broken down as follows:
+/// - Constructing the components and ranks are each O(V)
+/// - Outer loop: because each iteration cuts the number of components at least in half,
+///   due to the merging of components, the worst case complexity is O(logV), where V is
+///   the number of vertices.
+///     - First inner loop (over graph edges): this one is obvious; O(E), where E is the
+///       number of edges.
+///         - all operations within this loop are constant: O(1)
+///     - Check if all are None: O(V) because |min_edges| = |components| = |vertices|
+///     - Second inner loop (over min edges): this has multiple operations to consider:
+///         - the loop itself iterates over `min_edges`, so this is O(V)
+///         - `find_set_iterative()`: This uses path compression, which is technically
+///           O(alhpa(V)), where alpha(.) is the "inverse" Ackermann function, which grows
+///           so slowly that it can be considered constant: O(1)
+///         - `union_components()`: clearly constant O(1)
+///
+///               v-{first inner x outer}
+/// Total: O(V) + O(ElogV) + O(VlogV)
+///        ^-{construction}    ^-{second inner x outer}
+/// Asymptotic is O(ElogV) <= O(V^2logV)
 pub fn build_mst(graph: Graph) -> Vec<(usize, usize)> {
     let mut mst = vec![];
     let mut components = graph.vertices.clone();
@@ -51,7 +72,7 @@ pub fn build_mst(graph: Graph) -> Vec<(usize, usize)> {
     loop {
         // Initialize the cheapest edge for each component to "None"
         let mut min_edges: Vec<Option<usize>> = vec![None; components.len()];
-        for (i, (u, v, weight)) in graph.edges.iter().enumerate() {
+        for (i, (u, v, weight)) in graph.edges.iter().enumerate() {  // E iterations
             if components[*u] == components[*v] {
                 continue
             }

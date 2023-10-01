@@ -22,6 +22,7 @@
 //! - Noise reduction -- due to emphasis on shortest paths.
 //! - Adaptability -- works with different distance or weight metrics.
 //! - Visualization and analysis.
+mod binary_search;
 mod min_spanning_tree;
 
 

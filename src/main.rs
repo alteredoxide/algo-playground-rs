@@ -24,6 +24,7 @@
 //! - Visualization and analysis.
 mod binary_search;
 mod min_spanning_tree;
+mod sorting;
 
 
 fn main() {

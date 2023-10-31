@@ -24,6 +24,7 @@
 //! - Visualization and analysis.
 mod binary_search;
 mod min_spanning_tree;
+mod path_search;
 mod sorting;
 mod union_find;
 

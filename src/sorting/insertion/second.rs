@@ -21,6 +21,17 @@ fn sort_inplace2<T: PartialOrd>(values: &mut [T]) {
 }
 
 
+fn sort_inplace3<T: PartialOrd>(values: &mut [T]) {
+    for i in 1..values.len() {
+        for j in 0..i {
+            if values[i] < values[j] {
+                values.swap(i, j);
+            }
+        }
+    }
+}
+
+
 /// Manual implementation of swapping slice elements using pointers of the elements.
 /// NOTE: This function uses unsafe code, but still meets guaranteeds. The arg type for
 /// `values` could be an immutable ref if this function were itself labeled as unsafe,
@@ -91,7 +102,7 @@ mod tests {
             vec![0, 0, 1, 2, 3, 4],
         ];
         for (case, expect) in cases.iter_mut().zip(&expected) {
-            super::sort_inplace2(case);
+            super::sort_inplace3(case);
             assert_eq!(case, expect);
         }
     }
